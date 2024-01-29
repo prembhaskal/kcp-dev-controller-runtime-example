@@ -51,6 +51,7 @@ import (
 
 	datav1alpha1 "github.com/kcp-dev/controller-runtime-example/api/v1alpha1"
 	"github.com/kcp-dev/controller-runtime-example/controllers"
+	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 )
 
 var (
@@ -100,9 +101,10 @@ func main() {
 	var mgr ctrl.Manager
 	var err error
 	options := ctrl.Options{
-		Scheme:                 scheme,
-		MetricsBindAddress:     metricsAddr,
-		Port:                   9443,
+		Scheme: scheme,
+		// MetricsBindAddress:     metricsAddr,
+		// Port:                   9443,
+		Metrics:                metricsserver.Options{BindAddress: metricsAddr},
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
 		LeaderElectionID:       "68a0532d.my.domain",
